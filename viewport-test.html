@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow, noarchive">
+		<title>Viewport testing</title>
+		<script>function handleDisable(e){e.preventDefault()}document.addEventListener("contextmenu",handleDisable),document.addEventListener("selectstart",handleDisable),document.onselectstart=function(){return!1};</script>
+		<style>
+			#size{font-size: clamp(1rem, -0.875rem + 8.333333vw, 3.5rem);}
+			.red{color:red;}
+			#size{background-color:yellow;width:100%;height:100%;position:absolute;top:0;left:0;padding:0;margin:0;}
+			#size ul{margin:1rem auto;width:calc(100% - 4.5rem);height:calc(100% - 2rem);border:3px solid #000;display:flex;flex-direction:column;justify-content:center;list-style-type:none;}
+			#size ul li{padding-left:calc(90% - 80vw);}
+		</style>
+	</head>
+	<body>
+		<div id="size"><ul><li>Viewport Width: </li><li>Font Size (rem): </li><li>Font Size (px): </li></ul></div>
+		<script>
+			const [viewportWidth,fontSizeRem,fontSizePx] = document.querySelectorAll("li");
+			function calculate(){
+				viewportWidth.innerText = `Viewport Width: ${window.innerWidth}px`;
+				fontSizeRem.innerText = `Font Size (rem): ${Number(window.getComputedStyle(viewportWidth).fontSize.slice(0, -2)) / 16}rem`;
+				fontSizePx.innerText = `Font Size (px): ${window.getComputedStyle(viewportWidth).fontSize}`;
+				if(window.innerWidth >= 840 || window.innerWidth <= 360){
+					fontSizePx.classList.add("red");
+					fontSizeRem.classList.add("red");
+				}else{
+					fontSizePx.classList.remove("red");
+					fontSizeRem.classList.remove("red");}}
+			window.addEventListener("resize", () => {calculate();});
+			calculate();
+		</script>
+	</body>
+</html>
